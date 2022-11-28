@@ -6,21 +6,40 @@
 //
 
 import SwiftUI
+import WebKit
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
-        }
-        .padding()
+        SwiftUIWebView()
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+    }
+}
+
+struct SwiftUIWebView: UIViewRepresentable {
+    typealias UIViewType = WKWebView
+    
+    let iframeUrl = "https://stackblitz.com/"
+    
+    let webView: WKWebView
+    
+    init() {
+        webView = WKWebView(frame: .zero)
+        webView.backgroundColor = .green
+        // Try to toggle this property an re-run the app
+        // webView.isOpaque = false
+        webView.load(URLRequest(url: URL(string: iframeUrl)!))
+        
+    }
+    
+    func makeUIView(context: Context) -> WKWebView {
+        webView
+    }
+    
+    func updateUIView(_ uiView: WKWebView, context: Context) {
     }
 }
